@@ -1,0 +1,21 @@
+version: '3'
+services:   # define the services for docker to run while compose
+  nodeapp:
+    image: docker-node-project  # Replace with your Node.js app image name (the project name)
+    ports:
+      - "8000:8000"  # Map port 8000 on the host to port 8000 in the container, first one is host post and later is container
+    depends_on:
+      - redis    # Ensure Redis starts before the Node.js app, as appr is dependent on redis services
+    networks:
+      - app-network
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379" # Map port 6379 on the host to port 6379 in the container
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
